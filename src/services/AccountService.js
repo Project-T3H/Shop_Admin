@@ -123,11 +123,8 @@ export function createUser(user) {
         'gender': user.gender,
         'date': dateStr,
         'address': user.address,
-        'province': user.province,
-        'district': user.district,
-        'wards': user.wards,
-        'note': user.note,
-        // 'image': user.image,
+        'password': '123456',
+        'role': user.role
     })
 
     return request({

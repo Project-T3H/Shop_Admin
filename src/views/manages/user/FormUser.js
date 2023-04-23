@@ -53,6 +53,16 @@ const FormUser = (props) => {
         let temp = { ...errors }
         if ('username' in fieldValues)
             temp.username = fieldValues.username ? "" : "Tên đăng nhập không được để trống"
+        if ('gender' in fieldValues)
+            temp.gender = fieldValues.gender ? "" : "Giới tính không được để trống"
+        if ('date' in fieldValues)
+            temp.date = fieldValues.date ? "" : "Ngày sinh không được để trống"
+        if ('phone' in fieldValues)
+            temp.phone = fieldValues.phone ? "" : "SĐT không được để trống"
+        if ('address' in fieldValues)
+            temp.address = fieldValues.address ? "" : "Địa chỉ không được để trống"
+        if ('email' in fieldValues)
+            temp.email = fieldValues.email ? "" : "Email không được để trống"
         if ('role' in fieldValues)
             temp.role = fieldValues.role ? "" : "Quyền không được để trống"
 

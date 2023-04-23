@@ -70,6 +70,7 @@ const ManageUser = () => {
             .then(response => {
                 console.log(response)
                 showNotification("Tạo mới nhân viên thành công!", 'success');
+                getData();
             });
         }
         resetForm()

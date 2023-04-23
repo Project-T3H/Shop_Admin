@@ -38,7 +38,6 @@ const ManageCustomer = () => {
         { id: 'gender', label: 'Giới tính' },
         { id: 'email', label: 'Email' },
         { id: 'phone', label: 'SĐT' },
-        { id: 'date', label: 'Ngày sinh' },
         { id: 'address', label: 'Địa chỉ' }
     ]
 
@@ -127,10 +126,9 @@ const ManageCustomer = () => {
                                     (<TableRow key={item.id}>
                                         <TableCell>{index + 1}</TableCell>
                                         <TableCell>{item.username}</TableCell>
+                                        <TableCell>{viewGender(item.gender)}</TableCell>
                                         <TableCell>{item.email}</TableCell>
                                         <TableCell>{item.phone}</TableCell>
-                                        <TableCell>{viewGender(item.gender)}</TableCell>
-                                        <TableCell>{item.date}</TableCell>
                                         <TableCell>{item.address}</TableCell>
                                     </TableRow>)
                                     )
