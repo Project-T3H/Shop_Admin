@@ -15,9 +15,8 @@ import { IconEdit, IconTrash, IconSearch } from '@tabler/icons';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect } from 'react';
 import { showNotification } from 'services/NotificationService';
-import { createProduct, deleteProduct, getlistProduct } from 'services/ProductService';
+import { createProduct, deleteProduct, getlistProduct, updateProduct } from 'services/ProductService';
 import FormProduct from './FormProduct';
-// import dayjs from 'dayjs';
 
 const useStyles = makeStyles(theme => ({
     pageContent: {
@@ -44,6 +43,7 @@ const ManageProduct = () => {
         { id: 'name', label: 'Tên sản phẩm' },
         { id: 'price', label: 'Giá'},
         { id: 'sale', label: 'Sale'},
+        { id: 'priceSell', label: 'Giá bán'},
         { id: 'actions', label: 'Lựa chọn', disableSorting: true }
     ]
 
@@ -53,6 +53,7 @@ const ManageProduct = () => {
     const [records, setRecords] = useState([])
 
     const addOrEdit = (product, resetForm) => {
+        console.log(product)
         if (product.id) {
             updateProduct(product).then(response => {
                 if (response !== null) {
@@ -170,6 +171,7 @@ const ManageProduct = () => {
                                         <TableCell>{item.product_name}</TableCell>
                                         <TableCell>{converToPrice(item.price)}</TableCell>
                                         <TableCell>{item.sale}%</TableCell>
+                                        <TableCell>{converToPrice(item.price - (item.price * item.sale)/100)}</TableCell>
                                         <TableCell>
                                             <Controls.ActionButton
                                                 color="primary"

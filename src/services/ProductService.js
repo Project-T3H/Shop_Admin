@@ -109,7 +109,7 @@ export function updateProduct(product) {
 
     return requestUploadFile({
         url: API_BASE + "update-product/" + product.id,
-        body: raw,
+        body: formData,
         method: 'PUT',
         redirect: 'follow'
     })

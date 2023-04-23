@@ -10,7 +10,7 @@ import { getListAllOrderItem } from 'services/OrdersService';
 const ViewOrderItem = (props) => {
 
     const headCells = [
-        { id: 'id', label: 'ID' },
+        { id: 'id', label: 'STT' },
         { id: 'productName', label: 'Sản phẩm' },
         { id: 'quantity', label: 'Số lượng' },
         { id: 'price', label: 'Giá' },
@@ -56,26 +56,27 @@ const ViewOrderItem = (props) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        addOrEdit(records, recordForEdit, resetForm);
+        addOrEdit(recordForEdit, resetForm);
     }
 
     useEffect(() => {
-        getListOrderItem();
-        if (recordForEdit != null)
+        if (recordForEdit != null) {
+            getListOrderItem(recordForEdit.id);
             setValues({
                 ...recordForEdit
             })
+        }
     }, [recordForEdit])
 
     // Lấy ds chức năng
 
     const getListOrderItem = (id) => {
         getListAllOrderItem(id)
-        .then(response => {
-            setRecords(response);
-        }).catch(error => {
-            console.log(error)
-        });
+            .then(response => {
+                setRecords(response);
+            }).catch(error => {
+                console.log(error)
+            });
     }
 
     return (
@@ -87,9 +88,9 @@ const ViewOrderItem = (props) => {
                         <TblHead />
                         <TableBody>
                             {
-                                recordsAfterPagingAndSorting().map(item =>
+                                recordsAfterPagingAndSorting().map((item, index) =>
                                 (<TableRow key={item.id}>
-                                    <TableCell>{item.id}</TableCell>
+                                    <TableCell>{index + 1}</TableCell>
                                     <TableCell>{item.product}</TableCell>
                                     <TableCell>{item.quantity}</TableCell>
                                     <TableCell>{converToPrice(item.price)}</TableCell>
@@ -101,13 +102,13 @@ const ViewOrderItem = (props) => {
                     </TblContainer>
                     <TblPagination />
                 </Grid>
-                <Grid item xs={12} style={{ textAlign: 'right' }}>
+                {recordForEdit === null ? '' : recordForEdit.status === false ?<Grid item xs={12} style={{ textAlign: 'right' }}>
                     <div>
                         <Controls.Button
                             type="submit"
                             text="Duyệt" onClick={handleSubmit} />
                     </div>
-                </Grid>
+                </Grid> : ''}
             </Grid>
         </div>
     )

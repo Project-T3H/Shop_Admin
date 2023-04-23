@@ -13,8 +13,9 @@ import { makeStyles } from '@mui/styles';
 // ===============================|| Dialog ||================================= //
 import { IconEye, IconSearch } from '@tabler/icons';
 import { useEffect } from 'react';
-import { getListAllOrders } from 'services/OrdersService';
+import { approvedOrder, getListAllOrders } from 'services/OrdersService';
 import ViewOrderItem from './VierwOrderItem';
+import { showNotification } from 'services/NotificationService';
 
 const useStyles = makeStyles(theme => ({
     pageContent: {
@@ -51,7 +52,16 @@ const ManageOrders = () => {
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } });
     const [records, setRecords] = useState([])
 
-    const addOrEdit = (functions, resetForm) => {
+    const addOrEdit = (orders, resetForm) => {
+        approvedOrder(orders).then(response => {
+            console.log(response)
+            showNotification('Duyệt đơn hàng thành công!', 'success');
+            getData();
+        }).catch(error => {
+            console.log(error)
+            showNotification('Duyệt đơn hàng thất bại!', 'danger');
+        });
+
         // if (functions.id) {
         //     // Update function
         //     updateFunction(functions).then(response => {
@@ -73,7 +83,7 @@ const ManageOrders = () => {
         //         showNotification('Create Function Fail', 'danger');
         //     });
         // }
-        resetForm()
+        // resetForm()
         setRecordForEdit(null)
         setOpen(false)
     }
@@ -148,7 +158,7 @@ const ManageOrders = () => {
                                         <TableCell>{item.email}</TableCell>
                                         <TableCell>{item.address}</TableCell>
                                         <TableCell>{converToPrice(item.total_price)}</TableCell>
-                                        <TableCell>{item.status === false ? 'Pending' : 'Approved'}</TableCell>
+                                        <TableCell>{item.status === false ? 'Chờ duyệt' : 'Đã duyệt'}</TableCell>
                                         <TableCell>
                                             <Controls.ActionButton
                                                 color="primary"

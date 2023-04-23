@@ -185,11 +185,11 @@ const ManageWarehouse = () => {
                                                 >
                                                 <IconEdit />
                                             </Controls.ActionButton>
-                                            <Controls.ActionButton
+                                            {/* <Controls.ActionButton
                                                 color="secondary"
                                                 onClick={() => {deleteImports(item) }}>
                                                 <IconTrash color='red' />
-                                            </Controls.ActionButton>
+                                            </Controls.ActionButton> */}
                                         </TableCell>
                                     </TableRow>)
                                     )

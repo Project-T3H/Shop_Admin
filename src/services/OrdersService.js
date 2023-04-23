@@ -43,8 +43,29 @@ export function getListAllOrders(){
 export function getListAllOrderItem(id){
 
     return request({
-        url: API_URL_ORDERS + 'list-orderdetail',
+        url: API_URL_ORDERS + 'list-orderdetailbyid/' + id,
         method: 'GET'
+    });
+
+}
+
+// Cập nhật duyệt đơn hàng
+export function approvedOrder(orders){
+
+    var raw = JSON.stringify({
+        "order_code": orders.order_code,
+        "phone": orders.phone,
+        "email": orders.email,
+        "address": orders.address,
+        "total_price": orders.total_price,
+        "status": 1
+      });
+
+    return request({
+        url: API_URL_ORDERS + 'update_order/' + orders.id,
+        method: 'PUT',
+        body: raw,
+        redirect: 'follow'
     });
 
 }

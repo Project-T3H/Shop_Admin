@@ -7,6 +7,7 @@ import { useState } from "react";
 import { getListAllSupplier } from "services/SupplierService";
 import useTable from "ui-component/useTable";
 import { IconTrash } from '@tabler/icons';
+import { getListTicketDetailById } from "services/TicketImportService";
 
 
 // Tab 
@@ -111,10 +112,29 @@ const FormWarehouse = (props) => {
     useEffect(() => {
         getAllSupplier();
         getAllProduct();
-        if (recordForEdit != null)
+        if (recordForEdit != null) {
             setValues({
-                ...recordForEdit
+                ...recordForEdit,
+                supplier: recordForEdit.supplier_id
             })
+            getListTicketDetailById(recordForEdit.id)
+                .then(response => {
+                    console.log(response)
+                    let list = [];
+                    response.forEach(item => {
+                        let customItem = {};
+                        customItem = { ...item, product_id: item.product_id, product_name: item.product_name, quantity: item.quantity }
+                        list = [...list, customItem];
+                    });
+                    setLstProductImport(list)
+                    console.log(lstProductImport)
+                    setTimeout(
+                        () => setRecords(lstProductImport), 2000)
+                }).catch(error => {
+                    console.log(error)
+                });
+
+        }
     }, [recordForEdit])
 
     const getAllSupplier = () => {
@@ -170,12 +190,12 @@ const FormWarehouse = (props) => {
         })
 
         getProductById(value)
-        .then(response => {
-            setNameProductImport(response.product_name)
-            console.log(response)
-        }).catch(error => {
-            console.log(error)
-        });
+            .then(response => {
+                setNameProductImport(response.product_name)
+                console.log(response)
+            }).catch(error => {
+                console.log(error)
+            });
     }
 
     const addProductImport = () => {

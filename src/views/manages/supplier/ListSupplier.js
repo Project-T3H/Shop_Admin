@@ -16,7 +16,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useEffect } from 'react';
 import FormSupplier from './FormSupplier';
 import { showNotification } from 'services/NotificationService';
-import { createSupplier, getListAllSupplier, updateSupplier } from 'services/SupplierService';
+import { createSupplier, deleteSupplier, getListAllSupplier, updateSupplier } from 'services/SupplierService';
 
 const useStyles = makeStyles(theme => ({
     pageContent: {
@@ -63,9 +63,12 @@ const ManageSupplier = () => {
         } else {
             createSupplier(supplier)
             .then(response => {
-                showNotification("Tạo mới nhà cung cấp thành công! ", 'success');
+                if(response){
+                    showNotification("Tạo mới nhà cung cấp thành công! ", 'success');
+                }
                 getData();
             }).catch(error => {
+                console.log(error);
                 showNotification("Tạo mới nhà cung cấp thất bại!", 'danger');
             });
         }

@@ -109,3 +109,12 @@ export function createTicketImportDetail(productImport){
     });
 
 }
+
+
+export function getListTicketDetailById(ticketImportId){
+    return request({
+        url: API_URL_TICKET_IMPORT + 'ticketdetailbyticketid/' + ticketImportId,
+        method: 'GET'
+    });
+
+}

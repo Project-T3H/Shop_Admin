@@ -39,7 +39,6 @@ const ManageBranch = () => {
     const headCells = [
         { id: 'id', label: 'STT' },
         { id: 'nameBranch', label: 'Tên nhãn hàng' },
-        { id: 'createBy', label: 'Người tạo' },
         { id: 'createDate', label: 'Ngày tạo' },
         { id: 'actions', label: 'Lựa chọn', disableSorting: true }
     ]
@@ -161,7 +160,6 @@ const ManageBranch = () => {
                                     (<TableRow key={item.id}>
                                         <TableCell>{index + 1}</TableCell>
                                         <TableCell>{item.branch_name}</TableCell>
-                                        <TableCell>{item.create_by}</TableCell>
                                         <TableCell>{formatDateTime(item.create_date)}</TableCell>
                                         <TableCell>
                                             <Controls.ActionButton

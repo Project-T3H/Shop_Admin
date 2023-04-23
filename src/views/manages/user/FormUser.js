@@ -11,7 +11,8 @@ const FormUser = (props) => {
         date: '',
         email: '',
         phone: '',
-        address: ''
+        address: '',
+        role: ''
     }
 
     const genders = [
@@ -25,17 +26,36 @@ const FormUser = (props) => {
         }
     ]
 
+    const role = [
+        {
+            id: 2,
+            title: 'MANAGER',
+        },
+        {
+            id: 3,
+            title: 'MANAGER_ODER'
+        },
+        {
+            id: 4,
+            title: 'MANAGER_WAREHOUSE'
+        },
+        {
+            id: 5,
+            title: 'MANAGER_USER'
+        },
+    ]
+
     const { addOrEdit, recordForEdit } = props
 
     const validate = (fieldValues = values) => {
+        console.log(fieldValues.username);
+        console.log(fieldValues.gender === '');
         let temp = { ...errors }
         if ('username' in fieldValues)
-            temp.username = fieldValues.username ? "" : "This fields is required."
-        if ('phone' in fieldValues)
-            temp.phone = fieldValues.phone ? "" : "This fields is required."
-        if ('address' in fieldValues)
-            temp.address = fieldValues.address ? "" : "This fields is required."
-            
+            temp.username = fieldValues.username ? "" : "Tên đăng nhập không được để trống"
+        if ('role' in fieldValues)
+            temp.role = fieldValues.role ? "" : "Quyền không được để trống"
+
         setErrors({
             ...temp
         })
@@ -61,12 +81,22 @@ const FormUser = (props) => {
     }
 
     useEffect(() => {
-        if (recordForEdit !== null){
+        if (recordForEdit !== null) {
             setValues({
                 ...recordForEdit
             })
         }
     }, [recordForEdit])
+
+    const handleChangeRole = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setValues({
+            ...values,
+            role: value
+        })
+    }
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -96,13 +126,21 @@ const FormUser = (props) => {
                     />
                 </Grid>
                 <Grid item xs={6} style={{ marginBottom: '15px' }}>
+                    <Controls.Select
+                        options={role}
+                        value={values.role}
+                        onChange={handleChangeRole}
+                        name="role"
+                        label="Quyền"
+                        error={errors.role}
+                    />
                     <Controls.Input
                         name="email"
                         label="Email"
                         value={values.email}
                         onChange={handleInputChange}
                         error={errors.email}
-                    />  
+                    />
                     <Controls.Input
                         name="phone"
                         label="SĐT"
